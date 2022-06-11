@@ -24,10 +24,10 @@ Freakbook users want to be able to share certain properties of their data to oth
 - Store encrypted message and hash of original date to freakbook
 
 ***Share properties***
-- Sign with FreakBook => signing the encrypted birthdate info + random number (can be current blockhash) + hash of date
+- Sign with FreakBook => signing the encrypted birthdate info + current timestamp + hash of date
 - App calculates zkproof
 - App decrypts encrypted birthdate
-- Create proof => birthdate (private input) + 3 public inputs - referenceTime + hash of date (decrypted date) + random number from server
+- Create proof => birthdate (private input) + 3 public inputs - referenceTime + hash of date (decrypted date) + current timestamp (from server)
 - Share proof
 - External verification
 

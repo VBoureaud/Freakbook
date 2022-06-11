@@ -3,10 +3,11 @@ pragma circom 2.0.0;
 //include "./circomlib/poseidon.circom";
 include "./circomlib/comparators.circom";
 
-
 template isAdult() {
    signal input birthdate;
    signal input referenceTime;
+   signal input validFrom;
+
    // signal input birthdate_hash;
    signal output out;
 
