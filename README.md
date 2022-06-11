@@ -5,9 +5,9 @@
 Contains database of encrypted data from user ( birthdates in this case )
 Structure of the data: 
 
-| Birthdate                                                                  | Address   |
-|----------------------------------------------------------------------------|-----------|
-| ```{ "Encrypted Date of Birth: " : "...",<br/>"HashOfPlainText": "..."}``` | "0xab..." |
+| Birthdate                                                             | Address   |
+|-----------------------------------------------------------------------|-----------|
+| ```{ "Encrypted Date of Birth: " : "...","HashOfPlainText": "..."}``` | "0xab..." |
 
 Freakbook also has an ethereum address and this address is used for freakbook identity provider initialization on chain.
 
@@ -16,7 +16,6 @@ Freakbook also has an ethereum address and this address is used for freakbook id
 ### Freakbook user
 
 Freakbook users want to be able to share certain properties of their data to other third parties which can verify these properties without having actual data in posession.
-
 
 ***User sign up process***
 - Encrypt date of birth with user private key
