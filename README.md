@@ -14,17 +14,19 @@ Bob recieve data from alice
 
 ----
 
-central data provider: gov agency, with private key for signing, keep record 
+Central data provider: freakbook, with private key for signing, keeps records
 
 -- Sign up process
 1: Encrypt date of birth with user private key
-2: store it to FreakBook
+2. Hash non-encrypted version of the date (poseidon hashing)
+3: Store encrypted message and hash of original date to freakbook
 
 -- Share info
-1: Sign with FreakBook => signing the encrypted birthdate info + random number duration
-2: App calculate zkproof
-3: 1proof = you have private key (private input) + 2 public inputs 
+1: Sign with FreakBook => signing the encrypted birthdate info + random number (can be current blockhash) + hash of date
+2: App calculates zkproof
+3. App decrypts encrypted birthdate
+3: 1proof = birthdate (private input) + 3 public inputs - referenceTime + hash of date (decrypted date) + random number from server
 4: share proof
-5: externe verification
+5: external verification
 
 groth16prove 
