@@ -19,3 +19,8 @@ tmp.txt
 
 # macOS
 .DS_Store
+
+# keys
+*.wasm
+*.zkey
+*.ptau
