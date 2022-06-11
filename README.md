@@ -1,32 +1,33 @@
-Alice Bob
+# Freakbook birthday example
 
-Plateform
+### Freakbook data provider
 
-Create an account Alice
+Contains database of encrypted data from user ( birthdates in this case )
+Structure of the data: 
 
-Bob connect with Alice
+| Birthdate                                                                  | Address   |
+|----------------------------------------------------------------------------|-----------|
+| ```{ "Encrypted Date of Birth: " : "...",<br/>"HashOfPlainText": "..."}``` | "0xab..." |
 
-Alice recieve request
-Accept
+Freakbook also has an ethereum address and this address is used for freakbook identity provider initialization on chain.
 
-Bob recieve data from alice
+***Data Provider Initialization*** happens by making it known in freakbook smart contract that certain address is playing a role of an identity provider by calling setIdentityProviderAddress() method.
+
+### Freakbook user
+
+Freakbook users want to be able to share certain properties of their data to other third parties which can verify these properties without having actual data in posession.
 
 
-----
+***User sign up process***
+- Encrypt date of birth with user private key
+- Hash non-encrypted version of the date (poseidon hashing)
+- Store encrypted message and hash of original date to freakbook
 
-Central data provider: freakbook, with private key for signing, keeps records
+***Share properties***
+- Sign with FreakBook => signing the encrypted birthdate info + random number (can be current blockhash) + hash of date
+- App calculates zkproof
+- App decrypts encrypted birthdate
+- Create proof => birthdate (private input) + 3 public inputs - referenceTime + hash of date (decrypted date) + random number from server
+- Share proof
+- External verification
 
--- Sign up process
-1: Encrypt date of birth with user private key
-2. Hash non-encrypted version of the date (poseidon hashing)
-3: Store encrypted message and hash of original date to freakbook
-
--- Share info
-1: Sign with FreakBook => signing the encrypted birthdate info + random number (can be current blockhash) + hash of date
-2: App calculates zkproof
-3. App decrypts encrypted birthdate
-3: 1proof = birthdate (private input) + 3 public inputs - referenceTime + hash of date (decrypted date) + random number from server
-4: share proof
-5: external verification
-
-groth16prove 

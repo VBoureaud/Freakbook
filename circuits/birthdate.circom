@@ -15,8 +15,8 @@ template isAdult() {
    // age in days
    var age = (referenceTime / 86400) - (birthdate / 86400);
 
-   // minimal number of days in 18 years
-   lt.in[0] <== 6570;
+   // maximum number of days in 18 years
+   lt.in[0] <== 6575;
    lt.in[1] <== age;
 
    lt.out ==> out;
