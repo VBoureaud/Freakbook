@@ -11,6 +11,11 @@ export default function Home(props) {
       loading,
   } = useContext(Web3Context);
 
+  const handleClick = async () => {
+    const res = await calculateProof();
+    console.log({ res });
+  }
+
   return (
     <div
       style={{
@@ -20,7 +25,8 @@ export default function Home(props) {
         minHeight: '70vh',
       }}
     >
-      <h2>Hello Home</h2>      
+      <h2>Hello Home</h2>
+      <Button onClick={handleClick}>Click Me</Button>      
       {loading && (
         <Button type="primary" style={{ margin: 'auto' }} loading>
           Loading

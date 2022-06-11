@@ -62,6 +62,7 @@ const swSrc = paths.swSrc;
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
+const wasmRegex = /\.wasm$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 const hasJsxRuntime = (() => {
@@ -533,6 +534,10 @@ module.exports = function (webpackEnv) {
                 },
                 'sass-loader'
               ),
+            },
+            {
+                test: wasmRegex,
+                loaders: ['wasm-loader'],
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
