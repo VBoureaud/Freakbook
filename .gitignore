@@ -24,3 +24,5 @@ tmp.txt
 *.wasm
 *.zkey
 *.ptau
+=======
+.idea
