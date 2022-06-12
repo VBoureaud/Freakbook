@@ -5,12 +5,15 @@ import Web2Context from "../store/web2Context";
 import config from "../config.js";
 
 import { calculateAge } from "../utils";
-import { calculateProof } from "../utils/snark";
+import { calculateProof, verifyProof } from "../utils/snark";
 
 const { Title } = Typography;
 
 export default function Home(props) {
   const [date, setDate] = useState('1990-02-23');
+  const [loadingSnark, setLoadingSnark] = useState(false);
+  const [proof, setProof] = useState(null);
+  const [publicSignals, setPublicSignals] = useState(null);
 
   const {
       loading,
@@ -31,6 +34,15 @@ export default function Home(props) {
     }
   }, [account]);
 
+  const handleVerify = async () => {
+    if (proof && publicSignals) {
+      setLoadingSnark(true);
+      const res = await verifyProof(proof, publicSignals);
+      if (res) message.success('You are an adult!');
+      setLoadingSnark(false);
+    }
+  }
+
   const handleClick = async () => {
     if (!account || !account.address) {
       message.error('You must be connected.');
@@ -39,11 +51,15 @@ export default function Home(props) {
 
     if (!date) message.error('Date is wrong or empty.');
     else {
+      setLoadingSnark(true);
       const dateYear = calculateAge(date);
       const res = await calculateProof(dateYear);
       console.log({ res });
+      setProof(res.proof);
+      setPublicSignals(res.publicSignals);
       //await addUser({ name: account.address, data: dateSec });
       //await getUser(account.address);
+      setLoadingSnark(false);
     }
 
     return true;
@@ -58,15 +74,15 @@ export default function Home(props) {
         minHeight: '70vh',
       }}
     >
-      
-      {account && user && <div style={{
+      {account && proof && !loadingSnark && <div style={{
         maxWidth: '450px',
         margin: 'auto',
       }}>
-        <Title>Welcome {user.name}</Title>
+        <Title>Welcome</Title>
+        <Button onClick={handleVerify}>Are you an adult ?</Button>
       </div>}
 
-      {account && !user && <div style={{
+      {account && !proof && !loadingSnark && <div style={{
         maxWidth: '450px',
         margin: 'auto',
       }}>
@@ -83,7 +99,11 @@ export default function Home(props) {
         </div>
       </div>}
 
-      {!loadingUser && !loading && !account && <div style={{
+      {!loadingSnark 
+        && !loadingUser
+        && !loading
+        && !account
+        && <div style={{
         maxWidth: '450px',
         margin: 'auto',
       }}>
@@ -91,7 +111,7 @@ export default function Home(props) {
         <Typography>Welcome to the FreakBook - FreakBook helps you share the right pieces of information trustlessly without leaking all your data to the outside world.</Typography>
       </div>}
       
-      {(loadingUser || loading) && (
+      {(loadingUser || loading || loadingSnark) && (
         <Button type="primary" style={{ margin: 'auto' }} loading>
           Loading
         </Button>
