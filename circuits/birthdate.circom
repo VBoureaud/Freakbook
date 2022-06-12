@@ -6,7 +6,6 @@ include "./circomlib/comparators.circom";
 template isAdult() {
    signal input birthdate;
    signal input referenceTime;
-   signal input messageHash;
 
    signal output out;
 
@@ -34,5 +33,5 @@ template isAdult() {
   //}
 }
 
-component main {public [referenceTime, messageHash]} = isAdult();
+component main {public [referenceTime]} = isAdult();
 
