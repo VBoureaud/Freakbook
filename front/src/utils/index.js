@@ -17,6 +17,20 @@ export const coordToTokenId = (x, y, maxX) => {
 
 export const dateToSeconds = (dateStr) => {
     const date = new Date(dateStr);
-    const seconds = date.getTime() / 1000;
+    const seconds = date.getTime() / 1000 / 86400 / 365.25;
     return seconds;
+}
+
+export const calculateAge = (birthDate) => {
+    birthDate = new Date(birthDate);
+    const otherDate = new Date();
+
+    var years = (otherDate.getFullYear() - birthDate.getFullYear());
+
+    if (otherDate.getMonth() < birthDate.getMonth() || 
+        otherDate.getMonth() == birthDate.getMonth() && otherDate.getDate() < birthDate.getDate()) {
+        years--;
+    }
+
+    return years;
 }

@@ -4,13 +4,13 @@ import Web3Context from "../store/web3Context";
 import Web2Context from "../store/web2Context";
 import config from "../config.js";
 
-import { dateToSeconds } from "../utils";
+import { calculateAge } from "../utils";
 import { calculateProof } from "../utils/snark";
 
 const { Title } = Typography;
 
 export default function Home(props) {
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState('1990-02-23');
 
   const {
       loading,
@@ -39,11 +39,11 @@ export default function Home(props) {
 
     if (!date) message.error('Date is wrong or empty.');
     else {
-      const dateSec = dateToSeconds(date);
-      const res = await calculateProof(dateSec);
-      //console.log({ res });
-      await addUser({ name: account.address, data: dateSec });
-      await getUser(account.address);
+      const dateYear = calculateAge(date);
+      const res = await calculateProof(dateYear);
+      console.log({ res });
+      //await addUser({ name: account.address, data: dateSec });
+      //await getUser(account.address);
     }
 
     return true;

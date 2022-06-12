@@ -36,6 +36,6 @@ Freakbook users want to be able to share certain properties of their data to oth
 
 ### Deploy
 
-$ cp circuits/circuit/circuit_js/circuit.wasm > server/public/
+$ cp circuits/circuit/circuit_js/circuit.wasm server/public/
 $ cp circuits/circuit/circuit_0001.zkey server/public/
 $ cp circuits/circuit/verification_key.json front/src/utils/zkeys/
