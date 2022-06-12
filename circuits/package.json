@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "assert": "^2.0.0",
+    "circomlib": "^2.0.3",
+    "curves": "^1.1.0",
+    "path": "^0.12.7",
+    "snarkjs": "^0.4.20"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "mocha": "^10.0.0"
+  }
+}
