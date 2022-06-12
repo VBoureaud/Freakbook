@@ -30,7 +30,7 @@ export const Web2ContextProvider = (props) => {
 		);
 		const data = await response.text();
     	const jsonData = JSON.parse(data);
-    	if (jsonData)
+    	if (jsonData && jsonData.name)
     		setUser(jsonData);
 		setLoadingUser(false);
     }

@@ -40,7 +40,7 @@ export default function Home(props) {
     if (!date) message.error('Date is wrong or empty.');
     else {
       const dateSec = dateToSeconds(date);
-      //const res = await calculateProof(dateSec);
+      const res = await calculateProof(dateSec);
       //console.log({ res });
       await addUser({ name: account.address, data: dateSec });
       await getUser(account.address);
