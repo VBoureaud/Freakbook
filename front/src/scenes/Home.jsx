@@ -88,7 +88,7 @@ export default function Home(props) {
         margin: 'auto',
       }}>
         <Title>Welcome</Title>
-        <Typography>Nisi dolor ad commodo excepteur fugiat reprehenderit occaecat magna et quis non culpa tempor anim mollit ad duis mollit cillum voluptate et sunt.</Typography>
+        <Typography>Welcome to the FreakBook - FreakBook helps you share the right pieces of information trustlessly without leaking all your data to the outside world.</Typography>
       </div>}
       
       {(loadingUser || loading) && (
