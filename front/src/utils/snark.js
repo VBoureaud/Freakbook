@@ -20,6 +20,7 @@ export const calculateProof = async (dateYear) => {
     const time = new Date().getTime() / 1000 / 86400 / 365.25;
     const nowYear = parseInt(time);
 
+    console.log({ dateYear });
     const { proof, publicSignals } =
       await snarkjs.groth16.fullProve({
         'birthdate': dateYear,

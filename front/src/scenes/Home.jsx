@@ -39,6 +39,7 @@ export default function Home(props) {
       setLoadingSnark(true);
       const res = await verifyProof(proof, publicSignals);
       if (res) message.success('You are an adult!');
+      else message.error('You are not an adult!');
       setLoadingSnark(false);
     }
   }
