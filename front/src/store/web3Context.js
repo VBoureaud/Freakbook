@@ -6,9 +6,6 @@ import WalletConnect from "@walletconnect/web3-provider";
 
 import config from "../config.js";
 
-import NftContractArtifact from "../contracts/NftContract.json";
-import NftContractAddress from "../contracts/NftContract_address.json";
-
 const Web3Context = React.createContext({
     web3: null,
     signer: null,
@@ -42,10 +39,10 @@ export const Web3ContextProvider = (props) => {
         const initUrlWeb3 = async () => {
             setLoading(true)
             try {
-                const provider = new ethers.providers.JsonRpcProvider(config.PROD.RPC);
-                setWeb3(provider);
+                //const provider = new ethers.providers.JsonRpcProvider(config.PROD.RPC);
+                //setWeb3(provider);
                 console.log("No web3 instance injected, using Local web3.");
-                initContracts(provider);
+                //initContracts(provider);
             } catch (e) {
                 console.log(e);
             } finally {
@@ -66,12 +63,11 @@ export const Web3ContextProvider = (props) => {
 
     const initContracts = (provider) => {
         const signer = provider.getSigner();
-        const nftContract = new ethers.Contract(
+        /*const nftContract = new ethers.Contract(
             NftContractAddress.Contract,
             NftContractArtifact.abi,
             signer);
-        setNftContract(nftContract);
-        setOpenSeaLink('https://testnets.opensea.io/assets/' + NftContractAddress.Contract + '/');
+        setNftContract(nftContract);*/
     }
 
     const initWeb3Modal = async () => {
