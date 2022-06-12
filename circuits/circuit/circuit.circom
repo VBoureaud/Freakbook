@@ -11,10 +11,10 @@ template isAdult() {
    component lt = LessThan(32);
 
    // age in days
-   var age = (referenceTime / 86400) - (birthdate / 86400);
+   var age = referenceTime - birthdate;
 
    // maximum number of days in 18 years
-   lt.in[0] <== 6575;
+   lt.in[0] <== 17;
    lt.in[1] <== age;
 
    lt.out ==> out;

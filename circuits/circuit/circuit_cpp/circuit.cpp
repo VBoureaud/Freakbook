@@ -25,7 +25,7 @@ uint get_size_of_input_hashmap() {return 256;}
 
 uint get_size_of_witness() {return 35;}
 
-uint get_size_of_constants() {return 7;}
+uint get_size_of_constants() {return 6;}
 
 uint get_size_of_io_map() {return 0;}
 
@@ -208,7 +208,7 @@ u64 myId = ctx_index;
 u32* mySubcomponents = ctx->componentMemory[ctx_index].subcomponents;
 FrElement* circuitConstants = ctx->circuitConstants;
 std::string* listOfTemplateMessages = ctx->listOfTemplateMessages;
-FrElement expaux[5];
+FrElement expaux[3];
 FrElement lvar[1];
 uint sub_component_aux;
 {
@@ -226,9 +226,7 @@ aux_cmp_num += 2;
 {
 PFrElement aux_dest = &lvar[0];
 // load src
-Fr_div(&expaux[1],&signalValues[mySignalStart + 1],&circuitConstants[5]); // line circom 14
-Fr_div(&expaux[2],&signalValues[mySignalStart + 2],&circuitConstants[5]); // line circom 14
-Fr_sub(&expaux[0],&expaux[1],&expaux[2]); // line circom 14
+Fr_sub(&expaux[0],&signalValues[mySignalStart + 1],&signalValues[mySignalStart + 2]); // line circom 14
 // end load src
 Fr_copy(aux_dest,&expaux[0]);
 }
@@ -238,7 +236,7 @@ uint cmp_index_ref = 0;
 PFrElement aux_dest = &ctx->signalValues[ctx->componentMemory[mySubcomponents[cmp_index_ref]].signalStart + 1];
 // load src
 // end load src
-Fr_copy(aux_dest,&circuitConstants[6]);
+Fr_copy(aux_dest,&circuitConstants[5]);
 }
 // no need to run sub component
 assert(--ctx->componentMemory[mySubcomponents[cmp_index_ref]].inputCounter);
