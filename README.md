@@ -1,4 +1,8 @@
-# Freakbook birthday example
+# Freakbook
+
+Identity provider containing a database of encrypted user data and using zkProof to witness data without revealing it.
+
+## Freakbook birthday example
 
 ### Freakbook data provider
 

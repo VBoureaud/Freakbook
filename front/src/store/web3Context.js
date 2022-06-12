@@ -1,40 +1,26 @@
 import React, {useEffect, useState} from "react";
-import { ethers, utils } from "ethers";
+import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import WalletConnect from "@walletconnect/web3-provider";
 
-import config from "../config.js";
+//import config from "../config.js";
 
 const Web3Context = React.createContext({
     web3: null,
     signer: null,
     account: null,
     loading: false,
-    loadingBuy: false,
-    loadingPrice: false,
-    loadingCount: false,
-    openSeaLink: null,
 
     initWeb3Modal: () => {},
-    getPixelPrice: () => {},
-    countLifePixel: () => {},
-    purchasePixel: () => {},
 });
 
 export const Web3ContextProvider = (props) => {
     const [web3, setWeb3] = useState(null);
     const [signer, setSigner] = useState(null);
     const [account, setAccount] = useState(null);
-    const [openSeaLink, setOpenSeaLink] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [loadingPrice, setLoadingPrice] = useState(false);
-    const [loadingCount, setLoadingCount] = useState(false);
-    const [loadingBuy, setLoadingBuy] = useState(false);
-    const [nftContract, setNftContract] = useState(null);
-    const [nftPrice, setNftPrice] = useState(0);
-    const [nftCount, setNftCount] = useState(0);
-
+    
     useEffect(() => {
         const initUrlWeb3 = async () => {
             setLoading(true)
@@ -62,7 +48,7 @@ export const Web3ContextProvider = (props) => {
     }, [])
 
     const initContracts = (provider) => {
-        const signer = provider.getSigner();
+        //const signer = provider.getSigner();
         /*const nftContract = new ethers.Contract(
             NftContractAddress.Contract,
             NftContractArtifact.abi,
@@ -118,69 +104,14 @@ export const Web3ContextProvider = (props) => {
         }
     }
 
-    const countLifePixel = async (tokenId) => {
-        try {
-            setLoadingCount(true);
-            const pixelCount = await nftContract.purchaseOfTokenIdCounter(tokenId);
-            setNftCount(pixelCount ? pixelCount.toNumber() : 0);
-            setLoadingCount(false);
-        } catch (e) {
-            console.log(e);
-            setLoadingCount(false);
-        }
-    }
-
-    const getPixelPrice = async (tokenId) => {
-        try {
-            setLoadingPrice(true);
-            const pixelPrice = await nftContract.calculatePixelPrice(tokenId);
-            setNftPrice(utils.formatEther(pixelPrice));
-            setLoadingPrice(false);
-        } catch (e) {
-            setLoadingPrice(false);
-        }
-    }
-
-    // tokenId: number
-    // color: arrayOf(number) ex: [ 12, 23, 56 ]
-    const purchasePixel = async (tokenId, color, callback) => {
-        try {
-            //if (!nftPrice) return false;
-            setLoadingBuy(true);
-            //const possiblePurchasable = await nftContract.checkPixelPurchasableTime(tokenId);
-            const weiPrice = utils.parseEther(nftPrice);
-            const tx = await nftContract.purchasePixel(tokenId, color, { value: weiPrice });
-            
-            // todo manage errors
-            tx.wait().then(() => {
-                setLoadingBuy(false);
-                if (callback) callback(true);
-            });
-        }
-        catch (e) {
-            if (callback) callback(false);
-            setLoadingBuy(false);
-        }
-    }
-
-
     return (
         <Web3Context.Provider
             value={{
                 web3,
                 signer,
                 loading,
-                loadingBuy,
-                loadingPrice,
-                loadingCount,
                 initWeb3Modal,
-                purchasePixel,
-                getPixelPrice,
-                countLifePixel,
-                nftPrice,
-                nftCount,
                 account,
-                openSeaLink,
             }}>
             {props.children}
         </Web3Context.Provider>
