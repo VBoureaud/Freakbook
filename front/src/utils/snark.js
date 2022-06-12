@@ -19,7 +19,7 @@ export const calculateProof = async (dateYear) => {
     // timestamp current
     const { proof, publicSignals } =
       await snarkjs.groth16.fullProve({
-        'birthdate': nowYear,
+        'birthdate': dateYear,
         'referenceTime': nowYear,
       },
       "http://0.0.0.0:3002/public/circuit.wasm",
@@ -36,12 +36,15 @@ export const calculateProof = async (dateYear) => {
     //const proofComponent = JSON.stringify(proof, null, 1);
 
     console.log('fetch verification_key');
-    const vkey = await fetch("http://0.0.0.0:3002/public/verification_key.json").then( function(res) {
-        return res.json();
-    });
+    const vkey = await fetch("http://0.0.0.0:3002/public/verification_key.json");
+    const vkeyJSON = await vkey.json();
+    console.log('VKey: ', vkeyJSON)
+    console.log('Signals: ', publicSignals)
+    console.log('Proof: ', proof)
+
     console.log('fetched, go plonk');
 
-    const res = await snarkjs.groth16.verify(vkey, publicSignals, proof);
+    const res = await snarkjs.groth16.verify(vkeyJSON, publicSignals, proof);
     console.log({ res });
     return res;
 }
