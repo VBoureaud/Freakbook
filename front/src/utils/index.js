@@ -14,3 +14,9 @@ export const displayDate = (dateStr, withHours=false, dateObj=null) => {
 export const coordToTokenId = (x, y, maxX) => {
     return y * maxX + x;
 }
+
+export const dateToSeconds = (dateStr) => {
+    const date = new Date(dateStr);
+    const seconds = date.getTime() / 1000;
+    return seconds;
+}
