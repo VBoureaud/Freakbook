@@ -3,25 +3,25 @@ import React, {useState} from "react";
 import config from "../config.js";
 
 const Web2Context = React.createContext({
-    loadingColors: false,
-    //errorColors: false,
-    nftTokens: null,
+    loadingUser: false,
+    //errorUser: false,
+    user: null,
 
-    getTokens: () => {},
+    getUser: () => {},
+    addUser: () => {},
 });
 
 export const Web2ContextProvider = (props) => {
-    const [loadingColors, setLoadingColors] = useState(false);
-    //const [errorColors, setErrorColors] = useState(false);
-    const [nftTokens, setNftTokens] = useState(null);
+    const [loadingUser, setLoadingUser] = useState(false);
+    //const [errorUser, setErrorUser] = useState(false);
+    const [user, setUser] = useState(null);
 
-	const getTokens = async () => {
-		setLoadingColors(true);
+	const getUser = async (name) => {
+		setLoadingUser(true);
 		let response = await fetch(
-			config.apiColors.url,
+			config.apiUser.getUser.url + '/' + name,
 			{
-				mode: 'cors',
-				credentials: 'same-origin',
+				method: config.apiUser.getUser.method,
 				headers: {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json'
@@ -30,18 +30,39 @@ export const Web2ContextProvider = (props) => {
 		);
 		const data = await response.text();
     	const jsonData = JSON.parse(data);
-    	if (jsonData.pixels)
-    		setNftTokens(jsonData.pixels);
-		setLoadingColors(false);
+    	if (jsonData)
+    		setUser(jsonData);
+		setLoadingUser(false);
+    }
+
+	const addUser = async (data) => {
+		setLoadingUser(true);
+		let response = await fetch(
+			config.apiUser.addUser.url,
+			{
+				method: config.apiUser.addUser.method,
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(data),
+			},
+		);
+		const res = await response.text();
+    	const jsonData = JSON.parse(res);
+    	if (jsonData)
+    		setUser(jsonData);
+		setLoadingUser(false);
     }
 
     return (
         <Web2Context.Provider
             value={{
-                loadingColors,
-                //errorColors,
-                nftTokens,
-                getTokens,
+                loadingUser,
+                //errorUser,
+                user,
+                getUser,
+                addUser,
             }}>
             {props.children}
         </Web2Context.Provider>

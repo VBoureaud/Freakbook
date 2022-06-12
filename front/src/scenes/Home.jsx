@@ -14,17 +14,39 @@ export default function Home(props) {
 
   const {
       loading,
+      account,
   } = useContext(Web3Context);
 
+  const {
+      loadingUser,
+      errorUser,
+      user,
+      getUser,
+      addUser,
+  } = useContext(Web2Context);
+
+  useEffect(() => {
+    if (account && account.address) {
+      getUser(account.address);
+    }
+  }, [account]);
+
   const handleClick = async () => {
-    console.log({ date });
+    if (!account || !account.address) {
+      message.error('You must be connected.');
+      return false;
+    }
+
     if (!date) message.error('Date is wrong or empty.');
     else {
       const dateSec = dateToSeconds(date);
-      console.log({ dateSec });
-      const res = await calculateProof(dateSec);
-      console.log({ res });
+      //const res = await calculateProof(dateSec);
+      //console.log({ res });
+      await addUser({ name: account.address, data: dateSec });
+      await getUser(account.address);
     }
+
+    return true;
   }
 
   return (
@@ -37,7 +59,14 @@ export default function Home(props) {
       }}
     >
       
-      <div style={{
+      {account && user && <div style={{
+        maxWidth: '450px',
+        margin: 'auto',
+      }}>
+        <Title>Welcome {user.name}</Title>
+      </div>}
+
+      {account && !user && <div style={{
         maxWidth: '450px',
         margin: 'auto',
       }}>
@@ -52,9 +81,17 @@ export default function Home(props) {
           />
           <Button type='primary' style={{ flex: 1 }} onClick={handleClick}>Confirm</Button>   
         </div>
-      </div>
+      </div>}
+
+      {!loadingUser && !loading && !account && <div style={{
+        maxWidth: '450px',
+        margin: 'auto',
+      }}>
+        <Title>Welcome</Title>
+        <Typography>Nisi dolor ad commodo excepteur fugiat reprehenderit occaecat magna et quis non culpa tempor anim mollit ad duis mollit cillum voluptate et sunt.</Typography>
+      </div>}
       
-      {loading && (
+      {(loadingUser || loading) && (
         <Button type="primary" style={{ margin: 'auto' }} loading>
           Loading
         </Button>

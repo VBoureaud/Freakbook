@@ -77,7 +77,7 @@ function App() {
           <div style={styles.headerContainer}>
             <Link to="/" style={{ display: "flex", flexDirection: "column", lineHeight: "15px", color: '#333' }}>
               <Title style={{ lineHeight: '35px', margin: 0 }} level={5}>FreakBook</Title>
-              <p>Description here.</p>
+              <p>Welcome privacy.</p>
             </Link>
             <div style={styles.rightHeader}>
               {!account && <p style={styles.accountBox}>
@@ -104,10 +104,10 @@ function App() {
           </Switch>
         </div>
       </Router>
-      {!isLogged && <Footer style={{ textAlign: "center", paddingTop: "60px" }}>
+      <Footer style={{ textAlign: "center", paddingTop: "60px" }}>
         <Text style={{ display: "block" }}>Built at ETHPrague 2022 - v0.0.1</Text>
         <Text style={{ display: "block" }}>Find us on <a rel="noreferrer" target="_blank" href="https://github.com/VBoureaud/FreakBook">Github</a></Text>
-      </Footer>}
+      </Footer>
     </Layout>
   );
 }

@@ -30,6 +30,7 @@ export const calculateProof = async (dateSeconds) => {
 
     const end = Date.now();
     const timeTaken = ((end - start) / 1000).toString() + ' seconds';
+    console.log({timeTaken});
     console.log({proof});
     console.log({publicSignals});
 
